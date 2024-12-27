@@ -11,19 +11,17 @@ app.get('/', (req, res) => {
     res.json({ message: 'hola mundo' });
 });
 
-// 1️⃣
 const ACCEPTED_ORIGINS = [
     'http://localhost:8080',
     'http://127.0.0.1:8080',
     'http://localhost:1234',
-    'https://movies.com' // NOTA Ejemplo de ruta en producción
+    'https://movies.com' 
 ]
 
 app.get('/movies', (req, res) => {
-    // 2️⃣
     const origin = req.headers.origin;
-    if(ACCEPTED_ORIGINS.includes(origin) || !origin) { // NOTA si no se envía origin se permite la petición esto sucede en un mismo servidor
-        res.header('Access-Control-Allow-Origin', origin); // NOTA se puede usar * para cualquier origen
+    if(ACCEPTED_ORIGINS.includes(origin) || !origin) { 
+        res.header('Access-Control-Allow-Origin', origin); 
     } 
     res.json(movies);
 });
@@ -78,13 +76,8 @@ app.patch('/movies/:id', (req, res) => {
     return res.json(updatedMovie);
 })
 
-// 3️⃣ DELETE
 app.delete('/movies/:id', (req, res) => {
-    /*
-        ALERTA CORS
-        no funciona con DELETE ya que son metodos que requieren preflight PUT, DELETE, PATCH
-        Se debe enviar un OPTIONS con los headers permitidos
-    */
+   
     const origin = req.headers.origin;
     if(ACCEPTED_ORIGINS.includes(origin) || !origin) { 
         res.header('Access-Control-Allow-Origin', origin); 
@@ -97,7 +90,6 @@ app.delete('/movies/:id', (req, res) => {
     return res.json(deletedMovie);
 })
 
-// 4️⃣ OPTIONS
 app.options('/movies/:id', (req, res) => {
     const origin = req.headers.origin;
     if(ACCEPTED_ORIGINS.includes(origin) || !origin) { 

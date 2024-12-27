@@ -22,7 +22,6 @@ function validateMovie(object) {
 }
 
 function validatePartialMovie(object) {
-    // partial() => verifica si esta esa propiedad y la actualiza solo esa
     return movieSchema.partial().safeParse(object);
 }
 
